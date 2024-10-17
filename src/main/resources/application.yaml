@@ -1,0 +1,63 @@
+logging:
+  pattern:
+    level: "%5p %X"
+  level:
+    root: INFO
+    "io.nats": TRACE
+    "com.arangodb": TRACE
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+    baggage:
+      correlation:
+        enabled: true
+    propagation:
+      type: w3c
+  observations:
+    key-values:
+      service: ${spring.application.name}
+  endpoints:
+    enabled-by-default: true
+  opentelemetry:
+    resource-attributes:
+      "service.name": ${spring.application.name}
+  otlp:
+    tracing:
+      endpoint: http://localhost:4318/v1/traces
+    metrics:
+      export:
+        url: http://localhost:4318/v1/metrics
+
+
+---
+
+spring:
+  application:
+    name: nats-producer
+  config:
+    activate:
+      on-profile: producer
+
+
+nats:
+  spring:
+    server: localhost:4222,localhost:4223,localhost:4224
+    connection-name: electralink
+    nkey: SUAP36FL4YEWZ7YEK5VADD6CVAPXNSCHKTFFKFZEQ75ONW6EFZRG4ZSWSA
+
+---
+
+spring:
+  application:
+    name: nats-consumer
+  config:
+    activate:
+      on-profile: consumer
+
+nats:
+  spring:
+    server: localhost:4222,localhost:4223,localhost:4224
+    connection-name: electralink
+    nkey: SUAP36FL4YEWZ7YEK5VADD6CVAPXNSCHKTFFKFZEQ75ONW6EFZRG4ZSWSA

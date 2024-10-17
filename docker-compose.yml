@@ -1,0 +1,38 @@
+services:
+  natsone:
+    image: nats
+    command: "--server_name natsone -c /etc/nats/nats.conf"
+    ports:
+      - "127.0.0.1:4222:4222"
+    volumes:
+      - ./nats.conf.json:/etc/nats/nats.conf:ro
+      - natsone:/data
+  natstwo:
+    image: nats
+    command: "--server_name natstwo -c /etc/nats/nats.conf"
+    ports:
+      - "127.0.0.1:4223:4222"
+    volumes:
+      - ./nats.conf.json:/etc/nats/nats.conf:ro
+      - natstwo:/data
+  natsthree:
+    image: nats
+    command: "--server_name natsthree -c /etc/nats/nats.conf"
+    ports:
+      - "127.0.0.1:4224:4222"
+    volumes:
+      - ./nats.conf.json:/etc/nats/nats.conf:ro
+      - natsthree:/data
+  natsbox:
+    image: natsio/nats-box
+    stdin_open: true
+    tty: false
+    profiles:
+      - dev
+    volumes:
+      - ./nats-cli.json:/nsc/.config/nats/context/docker.json:ro
+      - ./nats-cli-context.txt:/nsc/.config/nats/context.txt:ro
+volumes:
+  natsone:
+  natstwo:
+  natsthree:

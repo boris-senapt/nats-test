@@ -1,0 +1,40 @@
+{
+  "listen": "0.0.0.0:4222",
+  "tls": {},
+  "allow_non_tls": true,
+  "http_port": 8222,
+  "cluster": {
+    "name": "NATS",
+    "port": 6222,
+    "no_advertise": true,
+    "listen": "0.0.0.0:6222",
+    "routes": [
+      "nats://natsone:6222",
+      "nats://natstwo:6222",
+      "nats://natsthree:6222"
+    ]
+  },
+  "accounts": {
+    "electralink": {
+      "jetstream": "enabled",
+      "users": [
+        {
+          "nkey": "UDJHG2WWT54MKPLOYKBXBZMSRK4TW7D22NINJ2H74KPZ7ZRPBEYYQ42A"
+        }
+      ]
+    },
+    "senapt": {
+      "jetstream": "enabled",
+      "users": [
+        {
+          "nkey": "UBZYYQCVZV3FKQ23DZAEBJBOWMFKJYHESQKDAAO6TTMI44OPE7WPIJMN"
+        }
+      ]
+    }
+  },
+  "jetstream": {
+    "max_file_store": 1Gi,
+    "max_memory_store": 0,
+    "store_dir": "/data"
+  }
+}
